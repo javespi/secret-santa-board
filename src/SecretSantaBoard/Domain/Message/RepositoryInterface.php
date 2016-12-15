@@ -14,4 +14,9 @@ interface RepositoryInterface
      * @return Message[]
      */
     public function findAll();
+
+    /**
+     * @param Message $message
+     */
+    public function persist(Message $message);
 }

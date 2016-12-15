@@ -27,7 +27,7 @@ class Message
     /**
      * @param int                $id
      * @param string             $to
-     * @param strin              $content
+     * @param string             $content
      * @param \DateTimeImmutable $createdAt
      */
     public function __construct(
@@ -40,5 +40,37 @@ class Message
         $this->to = $to;
         $this->content = $content;
         $this->createdAd = $createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function id()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function to()
+    {
+        return $this->to;
+    }
+
+    /**
+     * @return string
+     */
+    public function content()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function createdAt()
+    {
+        return $this->createdAt;
     }
 }

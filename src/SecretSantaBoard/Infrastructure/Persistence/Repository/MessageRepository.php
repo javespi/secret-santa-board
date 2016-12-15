@@ -2,6 +2,7 @@
 
 namespace SecretSantaBoard\Infrastructure\Persistence\Repository;
 
+use SecretSantaBoard\Domain\Message\Message;
 use SecretSantaBoard\Domain\Message\RepositoryInterface;
 use SecretSantaBoard\Infrastructure\Persistence\Hydrator\MessageHydrator;
 
@@ -34,5 +35,14 @@ class MessageRepository implements RepositoryInterface
     public function findAll()
     {
         // TODO: Implement findAll() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function persist(Message $message)
+    {
+        $dataToPersist = $this->hydrator->extract($message);
+        // TODO: Implement persist() method.
     }
 }

@@ -2,23 +2,40 @@
 
 namespace SecretSantaBoard\Infrastructure\Persistence\Hydrator;
 
+use SecretSantaBoard\Domain\Message\Message;
 use Zend\Hydrator\HydratorInterface;
 
 class MessageHydrator implements HydratorInterface
 {
     /**
-     * {@inheritdoc}
+     * @param Message $object
+     *
+     * @return array
      */
     public function extract($object)
     {
-        // TODO: Implement extract() method.
+        return [
+            'id' => $object->id(),
+            'to' => $object->to(),
+            'content' => $object->content(),
+            'created_at' => $object->createdAt()->getTimestamp(),
+        ];
     }
 
     /**
-     * {@inheritdoc}
+     * @param array   $data
+     * @param Message $object
      */
     public function hydrate(array $data, $object)
     {
-        // TODO: Implement hydrate() method.
+        $closure = function (array $data) {
+            $this->id = $data['id'];
+            $this->to = $data['to'];
+            $this->content = $data['content'];
+            $this->createdAt = new \DateTimeImmutable($data['created_at']);
+        };
+
+        $closure = $closure->bindTo($object, Message::class);
+        $closure($data);
     }
 }
