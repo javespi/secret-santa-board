@@ -2,24 +2,23 @@
 
 namespace SecretSantaBoard\Infrastructure\Ui\Web;
 
-use Silex\Application;
+use SecretSantaBoard\Application\App;
 use Silex\Controller;
 
 class MessageController extends Controller
 {
     /**
-     * @param Application $app
+     * @param App $app
      */
-    public function index(Application $app)
+    public static function index(App $app)
     {
-        // TODO: GET - List of Messages
-        // TODO: Return data to view
+        return $app->renderView('message.html.twig');
     }
 
     /**
-     * @param Application $app
+     * @param App $app
      */
-    public function create(Application $app)
+    public static function create(App $app)
     {
         // TODO: POST - Create a Message
         // TODO: Redirect to index

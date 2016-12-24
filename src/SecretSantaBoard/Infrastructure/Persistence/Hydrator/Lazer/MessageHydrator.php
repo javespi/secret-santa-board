@@ -1,12 +1,19 @@
 <?php
 
-namespace SecretSantaBoard\Infrastructure\Persistence\Hydrator;
+namespace SecretSantaBoard\Infrastructure\Persistence\Hydrator\Lazer;
 
 use SecretSantaBoard\Domain\Message\Message;
 use Zend\Hydrator\HydratorInterface;
 
 class MessageHydrator implements HydratorInterface
 {
+    const LAZER_SCHEMA = [
+        'id' => 'integer',
+        'to' => 'integer',
+        'content' => 'string',
+        'created_at' => 'integer',
+    ];
+
     /**
      * @param Message $object
      *

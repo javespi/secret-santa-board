@@ -1,13 +1,8 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-define('LAZER_DATA_PATH', realpath(dirname(__FILE__)).'/../data/');
+define('ROOT_PATH', realpath(__DIR__ . '/../'));
+define('APP_PATH', ROOT_PATH . '/src/SecretSantaBoard');
 
-$app = new Silex\Application();
-
-$app->get('/', function() use ($app) {
-    return 'This is Secret Santa Board!';
-});
-
-$app->run();
+(new SecretSantaBoard\Application\App())->run();

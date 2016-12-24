@@ -1,10 +1,11 @@
 <?php
 
-namespace SecretSantaBoard\Infrastructure\Persistence\Repository;
+namespace SecretSantaBoard\Infrastructure\Persistence\Repository\Lazer;
 
+use Lazer\Classes\Database;
 use SecretSantaBoard\Domain\Message\Message;
 use SecretSantaBoard\Domain\Message\RepositoryInterface;
-use SecretSantaBoard\Infrastructure\Persistence\Hydrator\MessageHydrator;
+use SecretSantaBoard\Infrastructure\Persistence\Hydrator\Lazer\MessageHydrator;
 
 class MessageRepository implements RepositoryInterface
 {
@@ -16,8 +17,11 @@ class MessageRepository implements RepositoryInterface
     /**
      * @param MessageHydrator $hydrator
      */
-    public function __construct(MessageHydrator $hydrator)
-    {
+    public function __construct(
+        Database $database,
+        MessageHydrator $hydrator
+    ) {
+        $this->database = $database;
         $this->hydrator = $hydrator;
     }
 
