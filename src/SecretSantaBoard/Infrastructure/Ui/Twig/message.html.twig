@@ -2,4 +2,9 @@
 
 {% block body %}
     <h1>Welcome to Secret Santa Board!</h1>
+    <form method="post" action="/create">
+        <input title="To" name="to" type="text" /><br/>
+        <textarea title="Content" name="content"></textarea><br/>
+        <button type="submit">Send!</button>
+    </form>
 {% endblock %}

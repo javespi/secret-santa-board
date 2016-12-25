@@ -9,7 +9,7 @@ class MessageHydrator implements HydratorInterface
 {
     const LAZER_SCHEMA = [
         'id' => 'integer',
-        'to' => 'integer',
+        'to' => 'string',
         'content' => 'string',
         'created_at' => 'integer',
     ];
@@ -32,6 +32,8 @@ class MessageHydrator implements HydratorInterface
     /**
      * @param array   $data
      * @param Message $object
+     *
+     * @return Message
      */
     public function hydrate(array $data, $object)
     {
@@ -44,5 +46,7 @@ class MessageHydrator implements HydratorInterface
 
         $closure = $closure->bindTo($object, Message::class);
         $closure($data);
+
+        return $object;
     }
 }

@@ -6,6 +6,7 @@ use SecretSantaBoard\Application\Provider\MessageProvider;
 use SecretSantaBoard\Application\Provider\TwigServiceProvider;
 use SecretSantaBoard\Infrastructure\Ui\Web\MessageController;
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class App extends Application
 {
@@ -36,13 +37,14 @@ class App extends Application
         $this->get('/', function () use ($app) {
             return MessageController::index($app);
         });
+
+        $this->post('/create', function (Request $request) use ($app) {
+            return MessageController::create($app, $request);
+        });
     }
 
     private function loadDefines()
     {
-        define(
-            'LAZER_DATA_PATH',
-            ROOT_PATH . '/databases/'
-        );
+        define('LAZER_DATA_PATH', ROOT_PATH . '/databases/');
     }
 }

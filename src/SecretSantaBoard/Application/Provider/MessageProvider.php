@@ -6,6 +6,7 @@ use Ddd\Application\Service\TransactionalApplicationService;
 use Ddd\Infrastructure\Application\Service\DummySession;
 use Lazer\Classes\Database;
 use Lazer\Classes\Helpers\Validate;
+use Lazer\Classes\LazerException;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use SecretSantaBoard\Application\Factory\MessageFactory;
@@ -21,10 +22,10 @@ class MessageProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app['message.database'] = function () {
-            if (false === Validate::table('message')->exists()) {
-                Database::create('message', [
-                    MessageHydrator::LAZER_SCHEMA,
-                ]);
+            try {
+                Validate::table('message')->exists();
+            } catch (LazerException $le) {
+                Database::create('message', MessageHydrator::LAZER_SCHEMA);
             }
 
             return Database::table('message');

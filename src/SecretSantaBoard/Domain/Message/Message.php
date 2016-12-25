@@ -24,7 +24,7 @@ class Message
     /**
      * @var \DateTimeImmutable
      */
-    private $createdAd;
+    private $createdAt;
 
     /**
      * @param int                $id
@@ -41,7 +41,7 @@ class Message
         $this->setId($id);
         $this->setTo($to);
         $this->setContent($content);
-        $this->createdAd = $createdAt;
+        $this->createdAt = $createdAt;
     }
 
     /**
