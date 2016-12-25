@@ -2,10 +2,14 @@
 
 namespace SecretSantaBoard\Application\Provider;
 
+use Ddd\Application\Service\TransactionalApplicationService;
+use Ddd\Infrastructure\Application\Service\DummySession;
 use Lazer\Classes\Database;
 use Lazer\Classes\Helpers\Validate;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use SecretSantaBoard\Application\Factory\MessageFactory;
+use SecretSantaBoard\Application\Service\Message\CreateMessageService;
 use SecretSantaBoard\Infrastructure\Persistence\Hydrator\Lazer\MessageHydrator;
 use SecretSantaBoard\Infrastructure\Persistence\Repository\Lazer\MessageRepository;
 
@@ -34,6 +38,22 @@ class MessageProvider implements ServiceProviderInterface
             return new MessageRepository(
                 $app['message.database'],
                 $app['message.hydrator']
+            );
+        };
+
+        $app['message.factory'] = function () use ($app) {
+            return new MessageFactory(
+                $app['message.repository']
+            );
+        };
+
+        $app['message.create'] = function () use ($app) {
+            return new TransactionalApplicationService(
+                new CreateMessageService(
+                    $app['message.repository'],
+                    $app['message.factory']
+                ),
+                new DummySession()
             );
         };
     }

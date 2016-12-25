@@ -9,12 +9,14 @@ use SecretSantaBoard\Infrastructure\Persistence\Hydrator\Lazer\MessageHydrator;
 
 class MessageRepository implements RepositoryInterface
 {
-    /**
-     * @var MessageHydrator
-     */
+    /** @var Database */
+    private $database;
+
+    /** @var MessageHydrator */
     private $hydrator;
 
     /**
+     * @param Database        $database
      * @param MessageHydrator $hydrator
      */
     public function __construct(
@@ -23,6 +25,14 @@ class MessageRepository implements RepositoryInterface
     ) {
         $this->database = $database;
         $this->hydrator = $hydrator;
+    }
+
+    /**
+     * @return int
+     */
+    public function lastId()
+    {
+        return (int) $this->database->lastId();
     }
 
     /**
@@ -46,7 +56,10 @@ class MessageRepository implements RepositoryInterface
      */
     public function persist(Message $message)
     {
-        $dataToPersist = $this->hydrator->extract($message);
-        // TODO: Implement persist() method.
+        $fields = $this->hydrator->extract($message);
+        foreach ($fields as $key => $value) {
+            $this->database->$key = $value;
+        }
+        $this->database->save();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace SecretSantaBoard\Domain\Message;
 
+use Assert\Assertion;
+
 class Message
 {
     /**
@@ -36,9 +38,9 @@ class Message
         $content,
         \DateTimeImmutable $createdAt
     ) {
-        $this->id = $id;
-        $this->to = $to;
-        $this->content = $content;
+        $this->setId($id);
+        $this->setTo($to);
+        $this->setContent($content);
         $this->createdAd = $createdAt;
     }
 
@@ -72,5 +74,33 @@ class Message
     public function createdAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param $content
+     */
+    private function setContent($content)
+    {
+        Assertion::string($content);
+        Assertion::notEmpty($content);
+        $this->content = $content;
+    }
+
+    /**
+     * @param $id
+     */
+    private function setId($id)
+    {
+        Assertion::integer($id);
+        $this->id = $id;
+    }
+
+    /**
+     * @param $to
+     */
+    private function setTo($to)
+    {
+        Assertion::notEmpty($to);
+        $this->to = $to;
     }
 }

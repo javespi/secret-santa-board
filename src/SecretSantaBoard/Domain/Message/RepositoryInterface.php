@@ -5,7 +5,13 @@ namespace SecretSantaBoard\Domain\Message;
 interface RepositoryInterface
 {
     /**
+     * @return int
+     */
+    public function lastId();
+
+    /**
      * @param int $id
+     *
      * @return Message
      */
     public function findById($id);
