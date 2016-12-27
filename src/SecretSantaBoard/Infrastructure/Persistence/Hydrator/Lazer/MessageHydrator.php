@@ -41,7 +41,7 @@ class MessageHydrator implements HydratorInterface
             $this->id = $data['id'];
             $this->to = $data['to'];
             $this->content = $data['content'];
-            $this->createdAt = new \DateTimeImmutable($data['created_at']);
+            $this->createdAt = date_create_immutable($data['created_at']);
         };
 
         $closure = $closure->bindTo($object, Message::class);

@@ -4,20 +4,11 @@ namespace SecretSantaBoard\Infrastructure\Ui\Web;
 
 use SecretSantaBoard\Application\App;
 use SecretSantaBoard\Application\Service\Message\CreateMessageRequest;
-use Silex\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MessageController extends Controller
+class MessageController
 {
-    /**
-     * @param App $app
-     */
-    public static function index(App $app)
-    {
-        return $app->renderView('message.html.twig');
-    }
-
     /**
      * @param App     $app
      * @param Request $request

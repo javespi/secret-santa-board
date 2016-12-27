@@ -1,0 +1,15 @@
+board-index:
+    path: /messages
+    defaults:
+        _controller: 'SecretSantaBoard\Infrastructure\Ui\Web\BoardController::index'
+
+board-show:
+    path: /messages/{to}
+    defaults:
+        _controller: 'SecretSantaBoard\Infrastructure\Ui\Web\BoardController::show'
+
+message-create:
+    path: /messages/create
+    methods: [POST]
+    defaults:
+        _controller: 'SecretSantaBoard\Infrastructure\Ui\Web\MessageController::create'

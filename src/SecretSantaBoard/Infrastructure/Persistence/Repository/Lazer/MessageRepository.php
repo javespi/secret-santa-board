@@ -38,9 +38,15 @@ class MessageRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findById($id)
+    public function findAllByTo($to)
     {
-        // TODO: Implement findById() method.
+        $result = $this->database
+            ->where('to', '=', $to)
+            ->orderBy('created_at', 'DESC')
+            ->findAll()
+            ->asArray();
+
+        return $this->hydrateCollection($result);
     }
 
     /**
@@ -48,7 +54,12 @@ class MessageRepository implements RepositoryInterface
      */
     public function findAll()
     {
-        // TODO: Implement findAll() method.
+        $result = $this->database
+            ->orderBy('created_at', 'DESC')
+            ->findAll()
+            ->asArray();
+
+        return $this->hydrateCollection($result);
     }
 
     /**
@@ -61,5 +72,31 @@ class MessageRepository implements RepositoryInterface
             $this->database->$key = $value;
         }
         $this->database->save();
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return Message[]
+     */
+    private function hydrateCollection(array $result)
+    {
+        $messages = [];
+        foreach ($result as $row) {
+            $messages[] = $this->hydrator->hydrate(
+                $row,
+                $this->prototype()
+            );
+        }
+
+        return $messages;
+    }
+
+    /**
+     * @return Message
+     */
+    private function prototype()
+    {
+        return (new \ReflectionClass(Message::class))->newInstanceWithoutConstructor();
     }
 }
